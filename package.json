@@ -66,7 +66,7 @@
     "build": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme && git add oclif.manifest.json README.md && git commit -m \"chore(release): release\"",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
-    "release": "standard-version --first-release"
+    "release": "standard-version -- --first-release"
   },
   "types": "lib/index.d.ts"
 }
