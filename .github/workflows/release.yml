@@ -26,8 +26,8 @@ jobs:
           git config user.email 65770768+vitech-sdlc@users.noreply.github.com
           git remote add gh-token "https://${{ secrets.GITHUB_TOKEN}}@github.com/vitech-team/sdlc-pipeline-helper.git"
       - run: npm ci
+      - run: npm verion patch
       - run: npm run build
-      - run: npm run release
       - run: npm publish --access=public
         env:
           CI: true
