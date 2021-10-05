@@ -19,7 +19,7 @@ $ npm install -g @sdlc.vitechteam/sdlc-pipeline-helper
 $ sdlcpipelinehelper COMMAND
 running command...
 $ sdlcpipelinehelper (-v|--version|version)
-@sdlc.vitechteam/sdlc-pipeline-helper/0.0.1 linux-x64 node-v14.18.0
+@sdlc.vitechteam/sdlc-pipeline-helper/0.0.3 linux-x64 node-v14.18.0
 $ sdlcpipelinehelper --help [COMMAND]
 USAGE
   $ sdlcpipelinehelper COMMAND
@@ -75,5 +75,5 @@ EXAMPLE
   Report Check" --commit="$PULL_PULL_SHA"
 ```
 
-_See code: [src/commands/junitpublish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.1/src/commands/junitpublish.ts)_
+_See code: [src/commands/junitpublish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.3/src/commands/junitpublish.ts)_
 <!-- commandsstop -->
