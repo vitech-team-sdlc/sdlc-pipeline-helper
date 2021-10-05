@@ -64,7 +64,6 @@
   "repository": "vitech-team/sdlc-pipeline-helper",
   "scripts": {
     "build": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme && git add oclif.manifest.json README.md && git commit -m \"chore(release): release\"",
-    "build1": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme && git add oclif.manifest.json README.md ",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "release": "standard-version --first-release"
