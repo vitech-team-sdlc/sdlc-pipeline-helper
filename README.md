@@ -19,7 +19,7 @@ $ npm install -g @sdlc.vitechteam/sdlc-pipeline-helper
 $ sdlcpipelinehelper COMMAND
 running command...
 $ sdlcpipelinehelper (-v|--version|version)
-@sdlc.vitechteam/sdlc-pipeline-helper/0.0.6 linux-x64 node-v14.18.0
+@sdlc.vitechteam/sdlc-pipeline-helper/0.0.7 linux-x64 node-v14.18.0
 $ sdlcpipelinehelper --help [COMMAND]
 USAGE
   $ sdlcpipelinehelper COMMAND
@@ -79,7 +79,7 @@ EXAMPLE
   $ sdlcpipelinehelper junit-report-publish --reportPaths="**/test-results/**/TEST-*.xml" --commit="$PULL_PULL_SHA"
 ```
 
-_See code: [src/commands/junit-report-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.6/src/commands/junit-report-publish.ts)_
+_See code: [src/commands/junit-report-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.7/src/commands/junit-report-publish.ts)_
 
 ## `sdlcpipelinehelper sarif-publish`
 
@@ -92,6 +92,7 @@ USAGE
 OPTIONS
   -h, --help                       show CLI help
   --appId=appId                    GitHub application id. Optionally use GH_APP_ID environment variable
+  --checkName=checkName            (required) check name
   --checkStatus=checkStatus        [default: completed] check status: queued, in_progress, or completed
   --commit=commit                  (required) commit SHA
   --detailsUrl=detailsUrl          Details URL about build. In our case link to Tekton dashboard.
@@ -109,6 +110,5 @@ OPTIONS
   --sourceRoot=sourceRoot          (required) sourceRoot DIR
 ```
 
-_See code: [src/commands/sarif-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.6/src/commands/sarif-publish.ts)_
+_See code: [src/commands/sarif-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.7/src/commands/sarif-publish.ts)_
 <!-- commandsstop -->
-
