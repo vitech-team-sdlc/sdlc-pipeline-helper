@@ -19,7 +19,7 @@ $ npm install -g @sdlc.vitechteam/sdlc-pipeline-helper
 $ sdlcpipelinehelper COMMAND
 running command...
 $ sdlcpipelinehelper (-v|--version|version)
-@sdlc.vitechteam/sdlc-pipeline-helper/0.0.3 linux-x64 node-v14.18.0
+@sdlc.vitechteam/sdlc-pipeline-helper/0.0.3 darwin-x64 node-v16.10.0
 $ sdlcpipelinehelper --help [COMMAND]
 USAGE
   $ sdlcpipelinehelper COMMAND
@@ -29,7 +29,8 @@ USAGE
 # Commands
 <!-- commands -->
 * [`sdlcpipelinehelper help [COMMAND]`](#sdlcpipelinehelper-help-command)
-* [`sdlcpipelinehelper junitpublish`](#sdlcpipelinehelper-junitpublish)
+* [`sdlcpipelinehelper junit-report-publish`](#sdlcpipelinehelper-junit-report-publish)
+* [`sdlcpipelinehelper sarif-publish`](#sdlcpipelinehelper-sarif-publish)
 
 ## `sdlcpipelinehelper help [COMMAND]`
 
@@ -48,21 +49,22 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
 
-## `sdlcpipelinehelper junitpublish`
+## `sdlcpipelinehelper junit-report-publish`
 
 describe the command here
 
 ```
 USAGE
-  $ sdlcpipelinehelper junitpublish
+  $ sdlcpipelinehelper junit-report-publish
 
 OPTIONS
   -f, --reportPaths=reportPaths    (required) report paths like: **/test-results/**/TEST-*.xml
   -h, --help                       show CLI help
-  -s, --summary=summary            (required) summary
+  -s, --summary=summary            [default: JUnit Report] summary
   --appId=appId                    GitHub application id. Optionally use GH_APP_ID environment variable
-  --checkName=checkName            (required) github check name
+  --checkName=checkName            [default: JUnit Check] github check name
   --commit=commit                  (required) commit SHA
+  --detailsUrl=detailsUrl          Details URL about build. In our case link to Tekton dashboard.
 
   --installationId=installationId  GitHub application installationId. Optionally use GH_APP_INSTALLATION_ID environment
                                    variable
@@ -71,9 +73,35 @@ OPTIONS
                                    variable
 
 EXAMPLE
-  $ pipehelper junitpublish --reportPaths="**/test-results/**/TEST-*.xml" --summary="JUnit Report" --checkName="JUnit 
-  Report Check" --commit="$PULL_PULL_SHA"
+  $ pipehelper junit-report-publish --reportPaths="**/test-results/**/TEST-*.xml" --commit="$PULL_PULL_SHA"
 ```
 
-_See code: [src/commands/junitpublish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.3/src/commands/junitpublish.ts)_
+_See code: [src/commands/junit-report-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.3/src/commands/junit-report-publish.ts)_
+
+## `sdlcpipelinehelper sarif-publish`
+
+Convert SARIF report into markdown format and publish it as Quality Check
+
+```
+USAGE
+  $ sdlcpipelinehelper sarif-publish
+
+OPTIONS
+  -h, --help                       show CLI help
+  --appId=appId                    GitHub application id. Optionally use GH_APP_ID environment variable
+  --checkName=checkName            (required) Check Name
+  --checkStatus=checkStatus        [default: completed] check status: queued, in_progress, or completed
+  --commit=commit                  (required) commit SHA
+  --detailsUrl=detailsUrl          Details URL about build. In our case link to Tekton dashboard.
+
+  --installationId=installationId  GitHub application installationId. Optionally use GH_APP_INSTALLATION_ID environment
+                                   variable
+
+  --privateKey=privateKey          GitHub application primate key. Optionally use GH_APP_PRIVATE_KEY environment
+                                   variable
+
+  --sourceRoot=sourceRoot          (required) sourceRoot DIR
+```
+
+_See code: [src/commands/sarif-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.3/src/commands/sarif-publish.ts)_
 <!-- commandsstop -->

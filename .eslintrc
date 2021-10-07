@@ -1,6 +1,25 @@
 {
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "oclif",
     "oclif-typescript"
-  ]
+  ],
+  "rules": {
+    "node/no-missing-import": [
+      "error",
+      {
+        "allowModules": [],
+        "tryExtensions": [
+          ".js",
+          ".json",
+          ".node",
+          ".ts"
+        ]
+      }
+    ],
+    "no-await-in-loop": [
+      "off",
+      {}
+    ]
+  }
 }

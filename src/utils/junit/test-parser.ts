@@ -26,44 +26,34 @@ export interface Position {
   line: number;
 }
 
-/**
- * Copyright 2020 ScaCap
- * https://github.com/ScaCap/action-surefire-report/blob/master/utils.js#L6
- *
- * Modification Copyright 2021 Mike Penz
- * https://github.com/mikepenz/action-junit-report/
- */
 export async function resolveFileAndLine(
   file: string | null,
   className: string,
-  output: string,
+  output: string
 ): Promise<Position> {
   const fileName = file ? file : className.split('.').slice(-1)[0]
   try {
-    const escapedFileName = fileName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const escapedFileName = fileName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace('::', '/')
     const matches = output.match(new RegExp(`${escapedFileName}.*?:\\d+`, 'g'))
     if (!matches) return {fileName, line: 1}
 
     const [lastItem] = matches.slice(-1)
-    const [, line] = lastItem.split(':')
+
+    const lineTokens = lastItem.split(':')
+    const line = lineTokens.pop() || '0'
+
     core.debug(`Resolved file ${fileName} and line ${line}`)
 
+    // eslint-disable-next-line radix
     return {fileName, line: parseInt(line)}
   } catch (error) {
     core.warning(
-      `⚠️ Failed to resolve file and line for ${file} and ${className}`,
+      `⚠️ Failed to resolve file and line for ${file} and ${className}`
     )
     return {fileName, line: 1}
   }
 }
 
-/**
- * Copyright 2020 ScaCap
- * https://github.com/ScaCap/action-surefire-report/blob/master/utils.js#L18
- *
- * Modification Copyright 2021 Mike Penz
- * https://github.com/mikepenz/action-junit-report/
- */
 export async function resolvePath(fileName: string): Promise<string> {
   core.debug(`Resolving path for ${fileName}`)
   const globber = await glob.create(`**/${fileName}.*`, {
@@ -81,30 +71,11 @@ export async function resolvePath(fileName: string): Promise<string> {
   return fileName
 }
 
-/**
- * Copyright 2020 ScaCap
- * https://github.com/ScaCap/action-surefire-report/blob/master/utils.js#L43
- *
- * Modification Copyright 2021 Mike Penz
- * https://github.com/mikepenz/action-junit-report/
- */
-export async function parseFile(
-  file: string,
-  suiteRegex = '',
-): Promise<TestResult> {
-  core.debug(`Parsing file ${file}`)
-
-  const data: string = fs.readFileSync(file, 'utf8')
-  const report = JSON.parse(parser.xml2json(data, {compact: true}))
-
-  return parseSuite(report, '', suiteRegex)
-}
-
+// eslint-disable-next-line complexity
 async function parseSuite(
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
   suite: any,
   parentName: string,
-  suiteRegex: string,
+  suiteRegex: string
 ): Promise<TestResult> {
   let count = 0
   let skipped = 0
@@ -165,8 +136,8 @@ async function parseSuite(
           (testcase.error && testcase.error._text) ||
           ''
         )
-          .toString()
-          .trim()
+        .toString()
+        .trim()
 
         const message = (
           (testcase.failure &&
@@ -184,11 +155,12 @@ async function parseSuite(
           testcase._attributes.classname ?
             testcase._attributes.classname :
             testcase._attributes.name,
-          stackTrace,
+          stackTrace
         )
 
         const path = await resolvePath(pos.fileName)
         let title = ''
+        // eslint-disable-next-line no-negated-condition
         if (pos.fileName !== testcase._attributes.name) {
           title = suiteName ?
             `${pos.fileName}.${suiteName}/${testcase._attributes.name}` :
@@ -218,16 +190,21 @@ async function parseSuite(
   return {count, skipped, annotations}
 }
 
-/**
- * Copyright 2020 ScaCap
- * https://github.com/ScaCap/action-surefire-report/blob/master/utils.js#L113
- *
- * Modification Copyright 2021 Mike Penz
- * https://github.com/mikepenz/action-junit-report/
- */
+export async function parseFile(
+  file: string,
+  suiteRegex = ''
+): Promise<TestResult> {
+  core.debug(`Parsing file ${file}`)
+
+  const data: string = fs.readFileSync(file, 'utf8')
+  const report = JSON.parse(parser.xml2json(data, {compact: true}))
+
+  return parseSuite(report, '', suiteRegex)
+}
+
 export async function parseTestReports(
   reportPaths: string,
-  suiteRegex: string,
+  suiteRegex: string
 ): Promise<TestResult> {
   const globber = await glob.create(reportPaths, {followSymbolicLinks: false})
   let annotations: Annotation[] = []
