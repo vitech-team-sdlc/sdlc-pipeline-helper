@@ -111,3 +111,4 @@ OPTIONS
 
 _See code: [src/commands/sarif-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.6/src/commands/sarif-publish.ts)_
 <!-- commandsstop -->
+
