@@ -38,6 +38,7 @@ export default class JunitReportPublish extends Command {
       repoName: flags.repoName,
       checkStatus: flags.checkStatus,
       reportPaths: flags.reportPaths,
+      detailsUrl: flags.detailsUrl,
     })
   }
 

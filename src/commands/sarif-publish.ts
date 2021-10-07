@@ -1,6 +1,7 @@
 import {Command, flags} from '@oclif/command'
 import {Sarif} from '../utils/sarif/sarif'
 import * as cf from '../utils/common-flags'
+import * as core from '@actions/core'
 
 export default class SarifPublish extends Command {
   static description = 'Convert SARIF report into markdown format and publish it as Quality Check'
@@ -33,7 +34,9 @@ export default class SarifPublish extends Command {
       repoName: flags.repoName,
       checkStatus: flags.checkStatus,
       sourceRoot: flags.sourceRoot,
+      detailsUrl: flags.detailsUrl,
     })
+    core.startGroup(`🚀 Publish results. Details: ${flags.commit} ${flags.repoOwner}/${flags.repoName} ${flags.detailsUrl}`)
   }
 
   requiredVar(value: string | undefined, error: string): string {
