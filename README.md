@@ -19,7 +19,7 @@ $ npm install -g @sdlc.vitechteam/sdlc-pipeline-helper
 $ sdlcpipelinehelper COMMAND
 running command...
 $ sdlcpipelinehelper (-v|--version|version)
-@sdlc.vitechteam/sdlc-pipeline-helper/0.0.4 linux-x64 node-v14.18.0
+@sdlc.vitechteam/sdlc-pipeline-helper/0.0.5 linux-x64 node-v14.18.0
 $ sdlcpipelinehelper --help [COMMAND]
 USAGE
   $ sdlcpipelinehelper COMMAND
@@ -79,7 +79,7 @@ EXAMPLE
   $ sdlcpipelinehelper junit-report-publish --reportPaths="**/test-results/**/TEST-*.xml" --commit="$PULL_PULL_SHA"
 ```
 
-_See code: [src/commands/junit-report-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.4/src/commands/junit-report-publish.ts)_
+_See code: [src/commands/junit-report-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.5/src/commands/junit-report-publish.ts)_
 
 ## `sdlcpipelinehelper sarif-publish`
 
@@ -109,5 +109,5 @@ OPTIONS
   --sourceRoot=sourceRoot          (required) sourceRoot DIR
 ```
 
-_See code: [src/commands/sarif-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.4/src/commands/sarif-publish.ts)_
+_See code: [src/commands/sarif-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.5/src/commands/sarif-publish.ts)_
 <!-- commandsstop -->
