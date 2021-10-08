@@ -11,11 +11,12 @@ export class Sarif {
   public async publishAsCheck(param: SarifCheck) {
     const sarifPayload = JSON.parse(new SarifParser().getCombinedSarifReport(param.sourceRoot))
     const sarifToMarkdownResults = sarif.sarifToMarkdown({})(sarifPayload)
+    const defaultConclusion = sarifToMarkdownResults[0].hasMessages ? 'action_required' : 'success'
     await new GithubCheckPublisher().publish(
       {
         ...param,
         checkName: param.checkName,
-        conclusion: sarifToMarkdownResults[0].hasMessages ? 'action_required' : 'success',
+        conclusion: param.checkConclusion === undefined ? defaultConclusion : param.checkConclusion,
         title: 'Sarif Report',
         summary: sarifToMarkdownResults[0].body,
       }

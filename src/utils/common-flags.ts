@@ -48,4 +48,10 @@ export const commonFlags = {
       default: 'completed',
     },
   ),
+  checkConclusion: flags.string(
+    {
+      description: `Can be one of action_required, cancelled, failure, neutral, success, skipped, stale, or timed_out.
+      When the conclusion is action_required, additional details should be provided on the site specified by details_url.`,
+    },
+  ),
 }

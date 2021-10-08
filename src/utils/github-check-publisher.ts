@@ -11,6 +11,7 @@ export interface GitHubCheckBasic {
   commit: string;
   detailsUrl?: string;
   checkStatus: string;
+  checkConclusion?: string;
 }
 
 export interface GitHubCheck extends GitHubCheckBasic{

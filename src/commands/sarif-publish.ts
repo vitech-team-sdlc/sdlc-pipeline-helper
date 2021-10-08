@@ -42,6 +42,7 @@ export default class SarifPublish extends Command {
       sourceRoot: flags.sourceRoot,
       detailsUrl: flags.detailsUrl,
       checkName: flags.checkName,
+      checkConclusion: flags.checkConclusion,
     })
     core.startGroup(`🚀 Publish results. Details: ${flags.commit} ${flags.repoOwner}/${flags.repoName} ${flags.detailsUrl}`)
   }
