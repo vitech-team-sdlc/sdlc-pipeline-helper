@@ -37,14 +37,20 @@ function getReportDetails(run: Run) {
   return `<details><summary>Details</summary><pre>${JSON.stringify(run.tool, null, 4)}</pre></details>`
 }
 
+function getRulesInfo(run: Run) {
+  const rules = run.tool.driver?.rules?.map(rule => `**${rule.id}** - ${rule.help?.text} \n > ${rule.shortDescription?.text} \n`).join('\n')
+  return `\n## Rules\n${rules}\n`
+}
+
 export const sarifToMarkdown = (options: sarifFormatterOptions): (sarifLog: Log) => sarifToMarkdownResult[] => {
   return (sarifLog: Log) => {
     return sarifLog.runs.map(run => {
       const title = options.title ? `# ${options.title}\n` : ''
       const ruleDetails = getReportDetails(run)
       const results = run.results && run.results.length > 0 ? resultsToMarkdownList(run) : emptySarifReport()
+      const ruleInfo = run?.tool?.driver?.rules && run?.tool?.driver?.rules?.length ? getRulesInfo(run) : ''
       return {
-        body: title + '\n' + ruleDetails + '\n' + results,
+        body: title + '\n' + ruleInfo + '\n' + ruleDetails + '\n' + results,
         hasMessages: run.results?.length !== 0,
       }
     })
