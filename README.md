@@ -19,7 +19,7 @@ $ npm install -g @sdlc.vitechteam/sdlc-pipeline-helper
 $ sdlcpipelinehelper COMMAND
 running command...
 $ sdlcpipelinehelper (-v|--version|version)
-@sdlc.vitechteam/sdlc-pipeline-helper/0.0.7 linux-x64 node-v14.18.0
+@sdlc.vitechteam/sdlc-pipeline-helper/0.0.8 linux-x64 node-v14.18.0
 $ sdlcpipelinehelper --help [COMMAND]
 USAGE
   $ sdlcpipelinehelper COMMAND
@@ -58,28 +58,36 @@ USAGE
   $ sdlcpipelinehelper junit-report-publish
 
 OPTIONS
-  -f, --reportPaths=reportPaths    (required) report paths like: **/test-results/**/TEST-*.xml
-  -h, --help                       show CLI help
-  --appId=appId                    GitHub application id. Optionally use GH_APP_ID environment variable
-  --checkStatus=checkStatus        [default: completed] check status: queued, in_progress, or completed
-  --commit=commit                  (required) commit SHA
-  --detailsUrl=detailsUrl          Details URL about build. In our case link to Tekton dashboard.
+  -f, --reportPaths=reportPaths      (required) report paths like: **/test-results/**/TEST-*.xml
+  -h, --help                         show CLI help
+  --appId=appId                      GitHub application id. Optionally use GH_APP_ID environment variable
 
-  --installationId=installationId  GitHub application installationId. Optionally use GH_APP_INSTALLATION_ID environment
-                                   variable
+  --checkConclusion=checkConclusion  Can be one of action_required, cancelled, failure, neutral, success, skipped,
+                                     stale, or timed_out.
+                                     When the conclusion is action_required, additional details should be
+                                     provided on the site specified by details_url.
 
-  --privateKey=privateKey          GitHub application primate key. Optionally use GH_APP_PRIVATE_KEY environment
-                                   variable
+  --checkStatus=checkStatus          [default: completed] check status: queued, in_progress, or completed
 
-  --repoName=repoName              (required) Git repository name
+  --commit=commit                    (required) commit SHA
 
-  --repoOwner=repoOwner            (required) Git repository owner
+  --detailsUrl=detailsUrl            Details URL about build. In our case link to Tekton dashboard.
+
+  --installationId=installationId    GitHub application installationId. Optionally use GH_APP_INSTALLATION_ID
+                                     environment variable
+
+  --privateKey=privateKey            GitHub application primate key. Optionally use GH_APP_PRIVATE_KEY environment
+                                     variable
+
+  --repoName=repoName                (required) Git repository name
+
+  --repoOwner=repoOwner              (required) Git repository owner
 
 EXAMPLE
   $ sdlcpipelinehelper junit-report-publish --reportPaths="**/test-results/**/TEST-*.xml" --commit="$PULL_PULL_SHA"
 ```
 
-_See code: [src/commands/junit-report-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.7/src/commands/junit-report-publish.ts)_
+_See code: [src/commands/junit-report-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.8/src/commands/junit-report-publish.ts)_
 
 ## `sdlcpipelinehelper sarif-publish`
 
@@ -90,25 +98,34 @@ USAGE
   $ sdlcpipelinehelper sarif-publish
 
 OPTIONS
-  -h, --help                       show CLI help
-  --appId=appId                    GitHub application id. Optionally use GH_APP_ID environment variable
-  --checkName=checkName            (required) check name
-  --checkStatus=checkStatus        [default: completed] check status: queued, in_progress, or completed
-  --commit=commit                  (required) commit SHA
-  --detailsUrl=detailsUrl          Details URL about build. In our case link to Tekton dashboard.
+  -h, --help                         show CLI help
+  --appId=appId                      GitHub application id. Optionally use GH_APP_ID environment variable
 
-  --installationId=installationId  GitHub application installationId. Optionally use GH_APP_INSTALLATION_ID environment
-                                   variable
+  --checkConclusion=checkConclusion  Can be one of action_required, cancelled, failure, neutral, success, skipped,
+                                     stale, or timed_out.
+                                     When the conclusion is action_required, additional details should be
+                                     provided on the site specified by details_url.
 
-  --privateKey=privateKey          GitHub application primate key. Optionally use GH_APP_PRIVATE_KEY environment
-                                   variable
+  --checkName=checkName              (required) check name
 
-  --repoName=repoName              (required) Git repository name
+  --checkStatus=checkStatus          [default: completed] check status: queued, in_progress, or completed
 
-  --repoOwner=repoOwner            (required) Git repository owner
+  --commit=commit                    (required) commit SHA
 
-  --sourceRoot=sourceRoot          (required) sourceRoot DIR
+  --detailsUrl=detailsUrl            Details URL about build. In our case link to Tekton dashboard.
+
+  --installationId=installationId    GitHub application installationId. Optionally use GH_APP_INSTALLATION_ID
+                                     environment variable
+
+  --privateKey=privateKey            GitHub application primate key. Optionally use GH_APP_PRIVATE_KEY environment
+                                     variable
+
+  --repoName=repoName                (required) Git repository name
+
+  --repoOwner=repoOwner              (required) Git repository owner
+
+  --sourceRoot=sourceRoot            (required) sourceRoot DIR
 ```
 
-_See code: [src/commands/sarif-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.7/src/commands/sarif-publish.ts)_
+_See code: [src/commands/sarif-publish.ts](https://github.com/vitech-team/sdlc-pipeline-helper/blob/v0.0.8/src/commands/sarif-publish.ts)_
 <!-- commandsstop -->
