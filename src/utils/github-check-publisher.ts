@@ -1,6 +1,7 @@
 import {Octokit} from 'octokit'
 // eslint-disable-next-line node/no-extraneous-import
 import {createAppAuth} from '@octokit/auth-app'
+import * as core from '@actions/core'
 
 export interface GitHubCheckBasic {
   appId: string;
@@ -14,7 +15,7 @@ export interface GitHubCheckBasic {
   checkConclusion?: string;
 }
 
-export interface GitHubCheck extends GitHubCheckBasic{
+export interface GitHubCheck extends GitHubCheckBasic {
   checkName: string;
   conclusion: string;
   title: string;
@@ -47,6 +48,8 @@ export default class GithubCheckPublisher {
         installationId: check.installationId,
       },
     })
+
+    core.info(`Sending Next Request: ${JSON.stringify(createCheckRequest)}`)
 
     return octokit.rest.checks.create(createCheckRequest)
   }

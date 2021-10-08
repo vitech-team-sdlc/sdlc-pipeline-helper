@@ -49,7 +49,7 @@ export class Junit {
           title: title,
           annotations: testResult.annotations.slice(0, 50),
           checkName: 'JUnit',
-          conclusion: param.checkConclusion === undefined ? conclusion : param.checkConclusion,
+          conclusion: param.checkConclusion ? param.checkConclusion : conclusion,
           summary: '',
         })
 

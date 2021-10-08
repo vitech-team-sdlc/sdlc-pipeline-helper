@@ -16,7 +16,7 @@ export class Sarif {
       {
         ...param,
         checkName: param.checkName,
-        conclusion: param.checkConclusion === undefined ? defaultConclusion : param.checkConclusion,
+        conclusion: param.checkConclusion ? param.checkConclusion : defaultConclusion,
         title: 'Sarif Report',
         summary: sarifToMarkdownResults[0].body,
       }

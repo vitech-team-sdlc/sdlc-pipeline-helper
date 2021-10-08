@@ -44,7 +44,8 @@ export default class SarifPublish extends Command {
       checkName: flags.checkName,
       checkConclusion: flags.checkConclusion,
     })
-    core.startGroup(`🚀 Publish results. Details: ${flags.commit} ${flags.repoOwner}/${flags.repoName} ${flags.detailsUrl}`)
+    core.info(`🚀 Publish results: ${flags.commit} ${flags.repoOwner}/${flags.repoName} ${flags.checkConclusion}`)
+    core.info(`🚀 Details URL: ${flags.detailsUrl}`)
   }
 
   requiredVar(value: string | undefined, error: string): string {
