@@ -6,7 +6,7 @@
   "bin": {
     "sdlcpipelinehelper": "./bin/run"
   },
-  "bugs": "https://github.com/vitech-team/sdlc-pipeline-helper",
+  "bugs": "https://github.com/vitech-team-sdlc/sdlc-pipeline-helper",
   "dependencies": {
     "@actions/core": "^1.5.0",
     "@actions/github": "^5.0.0",
@@ -58,7 +58,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/vitech-team/sdlc-pipeline-helper",
+  "homepage": "https://github.com/vitech-team-sdlc/sdlc-pipeline-helper",
   "keywords": [
     "oclif"
   ],
@@ -71,7 +71,7 @@
       "@oclif/plugin-help"
     ]
   },
-  "repository": "vitech-team/sdlc-pipeline-helper",
+  "repository": "vitech-team-sdlc/sdlc-pipeline-helper",
   "scripts": {
     "docs:commit": "git add oclif.manifest.json README.md && git commit -m \"chore(release): release\"",
     "docs": "oclif-dev manifest && oclif-dev readme",
