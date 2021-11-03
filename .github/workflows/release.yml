@@ -24,7 +24,7 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 65770768+vitech-sdlc@users.noreply.github.com
-          git remote add gh-token "https://${{ secrets.GITHUB_TOKEN}}@github.com/vitech-team/sdlc-pipeline-helper.git"
+          git remote add gh-token "https://${{ secrets.GITHUB_TOKEN}}@github.com/vitech-team-sdlc/sdlc-pipeline-helper.git"
       - run: npm ci
       - run: npm version patch
       - run: npm run build
