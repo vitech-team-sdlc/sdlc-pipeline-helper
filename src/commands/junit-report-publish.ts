@@ -20,6 +20,13 @@ export default class JunitReportPublish extends Command {
         required: true,
       },
     ),
+
+    checkName: flags.string(
+      {
+        description: 'Check Name',
+        required: true,
+      },
+    ),
   }
 
   async run() {
@@ -39,6 +46,7 @@ export default class JunitReportPublish extends Command {
       checkStatus: flags.checkStatus,
       reportPaths: flags.reportPaths,
       detailsUrl: flags.detailsUrl,
+      checkName: flags.checkName,
     })
   }
 

@@ -5,6 +5,7 @@ import GithubCheckPublisher, {GitHubCheckBasic} from '../github-check-publisher'
 
 interface JUnitCheck extends GitHubCheckBasic {
   reportPaths: string;
+  checkName?: string;
 }
 
 export class Junit {
@@ -48,7 +49,7 @@ export class Junit {
           ...param,
           title: title,
           annotations: testResult.annotations.slice(0, 50),
-          checkName: 'JUnit',
+          checkName: param.checkName ? param.checkName : 'JUnit',
           conclusion: param.checkConclusion ? param.checkConclusion : conclusion,
           summary: '',
         })
