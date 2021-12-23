@@ -15,7 +15,8 @@ type sarifToMarkdownResult = {
 
 function resultsToMarkdownList(run: Run) {
   const joinedSarifResults = run.results?.map(res => {
-    return `- **${res.ruleId}**: ${escape(res.message.text)} \n **level:** ${res.level}, **attack vector:** ${res.properties?.cvssv3_attackVector}, **source:** ${res.properties?.source} \n\n`
+    const propsDesc = res.properties ? `\n<details><summary>CVV Details</summary><pre>${JSON.stringify(res.properties, null, 4)}</pre></details>` : ''
+    return `- **${res.ruleId}**: ${escape(res.message.text)} \n **level:** ${res.level}, **attack vector:** ${res.properties?.cvssv3_attackVector}, **source:** ${res.properties?.source} ${propsDesc}\n\n`
   }).join('\n')
   return `
 ## Results (${run.results?.length} issues)

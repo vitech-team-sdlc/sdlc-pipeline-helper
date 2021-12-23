@@ -292,8 +292,7 @@
 
         "uri": {
           "description": "A string containing a valid relative or absolute URI.",
-          "type": "string",
-          "format": "uri-reference"
+          "type": "string"
         },
 
         "uriBaseId": {
