@@ -19,7 +19,7 @@ $ npm install -g @sdlc.vitechteam/sdlc-pipeline-helper
 $ sdlcpipelinehelper COMMAND
 running command...
 $ sdlcpipelinehelper (-v|--version|version)
-@sdlc.vitechteam/sdlc-pipeline-helper/0.0.14 darwin-x64 node-v16.10.0
+@sdlc.vitechteam/sdlc-pipeline-helper/0.0.15 linux-x64 node-v14.19.0
 $ sdlcpipelinehelper --help [COMMAND]
 USAGE
   $ sdlcpipelinehelper COMMAND
@@ -74,7 +74,7 @@ OPTIONS
   --title=title                      (required) check title
 ```
 
-_See code: [src/commands/check-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.14/src/commands/check-publish.ts)_
+_See code: [src/commands/check-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.15/src/commands/check-publish.ts)_
 
 ## `sdlcpipelinehelper cucumber-publish`
 
@@ -113,7 +113,7 @@ OPTIONS
   --repoOwner=repoOwner              (required) Git repository owner
 ```
 
-_See code: [src/commands/cucumber-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.14/src/commands/cucumber-publish.ts)_
+_See code: [src/commands/cucumber-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.15/src/commands/cucumber-publish.ts)_
 
 ## `sdlcpipelinehelper help [COMMAND]`
 
@@ -172,7 +172,7 @@ EXAMPLE
   $ sdlcpipelinehelper junit-report-publish --reportPaths="**/test-results/**/TEST-*.xml" --commit="$PULL_PULL_SHA"
 ```
 
-_See code: [src/commands/junit-report-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.14/src/commands/junit-report-publish.ts)_
+_See code: [src/commands/junit-report-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.15/src/commands/junit-report-publish.ts)_
 
 ## `sdlcpipelinehelper sarif-publish`
 
@@ -212,5 +212,5 @@ OPTIONS
   --sourceRoot=sourceRoot            (required) sourceRoot DIR
 ```
 
-_See code: [src/commands/sarif-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.14/src/commands/sarif-publish.ts)_
+_See code: [src/commands/sarif-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.15/src/commands/sarif-publish.ts)_
 <!-- commandsstop -->
