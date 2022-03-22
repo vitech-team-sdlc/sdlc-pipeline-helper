@@ -28,7 +28,7 @@ jobs:
       - run: npm ci
       - run: npm version patch
       - run: npm run build
-      - run: npm run lint
+      #      - run: npm run lint
       - run: npm run docs
       - run: npm run docs:commit
       - run: npm publish --access=public
