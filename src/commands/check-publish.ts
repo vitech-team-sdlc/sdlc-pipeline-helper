@@ -13,27 +13,15 @@ export default class CheckPublish extends Command {
     title: flags.string({description: 'check title', required: true}),
   }
 
-  requiredVar(value: string | undefined, error: string): string {
-    if (value === undefined || value.length === 0) {
-      throw new Error(error)
-    }
-    return value
-  }
-
   async run() {
     const {flags} = this.parse(CheckPublish)
-    const appId = flags.appId || process.env.GH_APP_ID
-    const privateKey = flags.privateKey || process.env.GH_APP_PRIVATE_KEY
-    const installationId = flags.installationId || process.env.GH_APP_INSTALLATION_ID
-
+    const ghAppVars = cf.getGhAppProps(flags)
     await new GithubCheckPublisher().publish({
+      ...ghAppVars,
       checkName: flags.checkName,
       conclusion: flags.checkConclusion ? flags.checkConclusion : 'success',
       summary: flags.summary,
       title: flags.title,
-      appId: this.requiredVar(appId, 'appId flag or GH_APP_ID environment variable is required'),
-      privateKey: this.requiredVar(privateKey, 'privateKey flag or GH_APP_PRIVATE_KEY environment variable is required'),
-      installationId: this.requiredVar(installationId, 'installationId flag or GH_APP_INSTALLATION_ID environment variable is required'),
       commit: flags.commit,
       repoOwner: flags.repoOwner,
       repoName: flags.repoName,

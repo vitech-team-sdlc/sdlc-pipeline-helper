@@ -1,39 +1,42 @@
 import {Command, flags} from '@oclif/command'
-import {Sarif} from '../utils/sarif/sarif'
+
+import {Cucumber} from '../utils/cuccumber/cucumber'
 import * as cf from '../utils/common-flags'
 import * as core from '@actions/core'
 
-export default class SarifPublish extends Command {
-  static description = 'Convert SARIF report into markdown format and publish it as Quality Check'
+export default class CucumberPublish extends Command {
+  static description = 'describe the command here'
 
   static flags = {
     ...cf.commonFlags,
 
-    checkName: flags.string(
+    reportPath: flags.string(
       {
-        description: 'check name',
-        required: true,
-      },
-    ),
-    sourceRoot: flags.string(
-      {
-        description: 'sourceRoot DIR',
-        required: true,
+        char: 'f',
+        description: 'report paths like: **/cucumber_report.json',
+        default: '**/cucumber_report.json',
+        required: false,
       },
     ),
 
+    checkName: flags.string(
+      {
+        description: 'Check Name',
+        required: true,
+      },
+    ),
   }
 
   async run() {
-    const {flags} = this.parse(SarifPublish)
+    const {flags} = this.parse(CucumberPublish)
     const ghAppVars = cf.getGhAppProps(flags)
-    await new Sarif().publishAsCheck({
+    await new Cucumber().publishAsCheck({
       ...ghAppVars,
+      reportPath: flags.reportPath,
       commit: flags.commit,
       repoOwner: flags.repoOwner,
       repoName: flags.repoName,
       checkStatus: flags.checkStatus,
-      sourceRoot: flags.sourceRoot,
       detailsUrl: flags.detailsUrl,
       checkName: flags.checkName,
       checkConclusion: flags.checkConclusion,

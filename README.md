@@ -19,7 +19,7 @@ $ npm install -g @sdlc.vitechteam/sdlc-pipeline-helper
 $ sdlcpipelinehelper COMMAND
 running command...
 $ sdlcpipelinehelper (-v|--version|version)
-@sdlc.vitechteam/sdlc-pipeline-helper/0.0.13 linux-x64 node-v14.18.2
+@sdlc.vitechteam/sdlc-pipeline-helper/0.0.13 darwin-x64 node-v16.10.0
 $ sdlcpipelinehelper --help [COMMAND]
 USAGE
   $ sdlcpipelinehelper COMMAND
@@ -29,6 +29,7 @@ USAGE
 # Commands
 <!-- commands -->
 * [`sdlcpipelinehelper check-publish`](#sdlcpipelinehelper-check-publish)
+* [`sdlcpipelinehelper cucumber-publish`](#sdlcpipelinehelper-cucumber-publish)
 * [`sdlcpipelinehelper help [COMMAND]`](#sdlcpipelinehelper-help-command)
 * [`sdlcpipelinehelper junit-report-publish`](#sdlcpipelinehelper-junit-report-publish)
 * [`sdlcpipelinehelper sarif-publish`](#sdlcpipelinehelper-sarif-publish)
@@ -75,6 +76,45 @@ OPTIONS
 
 _See code: [src/commands/check-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.13/src/commands/check-publish.ts)_
 
+## `sdlcpipelinehelper cucumber-publish`
+
+describe the command here
+
+```
+USAGE
+  $ sdlcpipelinehelper cucumber-publish
+
+OPTIONS
+  -f, --reportPath=reportPath        [default: **/cucumber_report.json] report paths like: **/cucumber_report.json
+  -h, --help                         show CLI help
+  --appId=appId                      GitHub application id. Optionally use GH_APP_ID environment variable
+
+  --checkConclusion=checkConclusion  Can be one of action_required, cancelled, failure, neutral, success, skipped,
+                                     stale, or timed_out.
+                                     When the conclusion is action_required, additional details should be
+                                     provided on the site specified by details_url.
+
+  --checkName=checkName              (required) Check Name
+
+  --checkStatus=checkStatus          [default: completed] check status: queued, in_progress, or completed
+
+  --commit=commit                    (required) commit SHA
+
+  --detailsUrl=detailsUrl            Details URL about build. In our case link to Tekton dashboard.
+
+  --installationId=installationId    GitHub application installationId. Optionally use GH_APP_INSTALLATION_ID
+                                     environment variable
+
+  --privateKey=privateKey            GitHub application primate key. Optionally use GH_APP_PRIVATE_KEY environment
+                                     variable
+
+  --repoName=repoName                (required) Git repository name
+
+  --repoOwner=repoOwner              (required) Git repository owner
+```
+
+_See code: [src/commands/cucumber-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.13/src/commands/cucumber-publish.ts)_
+
 ## `sdlcpipelinehelper help [COMMAND]`
 
 display help for sdlcpipelinehelper
@@ -109,6 +149,8 @@ OPTIONS
                                      stale, or timed_out.
                                      When the conclusion is action_required, additional details should be
                                      provided on the site specified by details_url.
+
+  --checkName=checkName              (required) Check Name
 
   --checkStatus=checkStatus          [default: completed] check status: queued, in_progress, or completed
 
