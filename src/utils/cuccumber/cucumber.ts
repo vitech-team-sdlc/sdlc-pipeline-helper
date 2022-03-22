@@ -7,6 +7,8 @@ import reportReader = require('./report-reader');
 
 interface CucumberCheck extends GitHubCheckBasic {
   reportPath: string;
+  sourceRootPath: string;
+  repoFolderName: string;
   checkName?: string;
   checkStatusOnError?: string;
   checkStatusOnUndefined?: string;
@@ -14,7 +16,6 @@ interface CucumberCheck extends GitHubCheckBasic {
   annotationStatusOnError?: string;
   annotationStatusOnUndefined?: string;
   annotationStatusOnPending?: string;
-  showNumberOfErrorOnCheckTitle?: string;
 }
 
 export class Cucumber {
@@ -27,7 +28,6 @@ export class Cucumber {
     const annotationStatusOnError: string = param.annotationStatusOnError ? param.annotationStatusOnError : 'failure'
     const annotationStatusOnUndefined = param.annotationStatusOnUndefined
     const annotationStatusOnPending = param.annotationStatusOnPending
-    const showNumberOfErrorOnCheckTitle = param.showNumberOfErrorOnCheckTitle
 
     const globber = await glob.create(inputPath, {
       followSymbolicLinks: false,
@@ -59,40 +59,32 @@ export class Cucumber {
         this.buildSummary(globalInformation.stepsNumber, 'Steps', summarySteps)
 
       const errors = reportReader.failedSteps(reportResult)
-      let errorAnnotations = await Promise.all(errors.map((e: any) => this.buildErrorAnnotations(e, annotationStatusOnError)))
+      const errorAnnotations = await Promise.all(
+        errors
+        .map((e: any) => this.buildStepAnnotation(e, annotationStatusOnError, 'Failed', param.sourceRootPath, param.repoFolderName))
+      )
 
       if (annotationStatusOnUndefined) {
         const undefinedSteps = reportReader.undefinedSteps(reportResult)
-        const undefinedAnnotations = await Promise.all(undefinedSteps.map((e: any) => this.buildUndefinedAnnotation(e, annotationStatusOnUndefined)))
+        const undefinedAnnotations = await Promise.all(
+          undefinedSteps
+          .map((e: any) => this.buildStepAnnotation(e, annotationStatusOnError, 'Undefined', param.sourceRootPath, param.repoFolderName))
+        )
         errorAnnotations.push(...undefinedAnnotations)
       }
+
       if (annotationStatusOnPending) {
         const pending = reportReader.pendingSteps(reportResult)
-        const pendingAnnotations = await Promise.all(pending.map((e: any) => this.buildPendingAnnotation(e, annotationStatusOnPending)))
+        const pendingAnnotations = await Promise.all(
+          pending
+          .map((e: any) => this.buildStepAnnotation(e, annotationStatusOnPending, 'Pending', param.sourceRootPath, param.repoFolderName))
+        )
         errorAnnotations.push(...pendingAnnotations)
       }
 
-      // TODO make an update request if there are more than 50 annotations
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      errorAnnotations = errorAnnotations.slice(0, 49)
-      const annotations = [
-        {
-          path: 'test',
-          start_line: 0,
-          end_line: 0,
-          start_column: 0,
-          end_column: 0,
-          annotation_level: 'notice',
-          title: 'Cucumber report summary',
-          message: summary,
-        },
-        ...errorAnnotations,
-      ]
-
       let additionnalTitleInfo = ''
       // eslint-disable-next-line eqeqeq
-      if (showNumberOfErrorOnCheckTitle == 'true' && globalInformation.failedScenarioNumber > 0) {
+      if (globalInformation.failedScenarioNumber > 0) {
         additionnalTitleInfo = ` (${globalInformation.failedScenarioNumber} error${globalInformation.failedScenarioNumber > 1 ? 's' : ''})`
       }
       let checkStatus = ''
@@ -110,9 +102,9 @@ export class Cucumber {
 
       core.info('send global cucumber report data')
       const check: GitHubCheck = {
-        conclusion: checkStatus,
         ...param,
-        annotations: annotations,
+        conclusion: checkStatus,
+        annotations: errorAnnotations.slice(0, 49),
         checkName: checkName,
         checkStatus: 'completed',
         summary: summary,
@@ -137,20 +129,22 @@ export class Cucumber {
     }
   }
 
-  async findBestFileMatch(file: string): Promise<string> {
+  async findBestFileMatch(file: string, sourceRootPath: string, repoFolderName: string): Promise<string> {
     let searchFile = file
     if (searchFile.startsWith('classpath:')) {
       searchFile = searchFile.substring(10)
     }
-    const globber = await glob.create('**/' + searchFile, {
+    const globber = await glob.create(`${sourceRootPath}/**/${searchFile}`, {
       followSymbolicLinks: false,
     })
     const files = await globber.glob()
+    core.info(`files ${JSON.stringify(files)}`)
     if (files.length > 0) {
       const featureFile = files[0]
-      const repoName = github.context.repo.repo
-      const indexOfRepoName = featureFile.indexOf(repoName)
-      return featureFile.substring(indexOfRepoName + repoName.length + 1)
+      const indexOfRepoName = featureFile.indexOf(repoFolderName)
+      const result = featureFile.substring(indexOfRepoName + repoFolderName.length + 1)
+      core.info(`GH annotation file: ${JSON.stringify(result)}`)
+      return result
     }
 
     return ''
@@ -158,8 +152,8 @@ export class Cucumber {
 
   memoizedFindBestFileMatch = this.memoize(this.findBestFileMatch)
 
-  async buildStepAnnotation(cucumberError: any, status: any, errorType: any) {
-    const fileMatch = await this.memoizedFindBestFileMatch(cucumberError.file)
+  async buildStepAnnotation(cucumberError: any, status: any, errorType: any, sourceRoot: string, repoFolderName: string) {
+    const fileMatch = await this.memoizedFindBestFileMatch(cucumberError.file, sourceRoot, repoFolderName)
     return {
       path: fileMatch || cucumberError.file,
       start_line: cucumberError.line,
@@ -172,23 +166,11 @@ export class Cucumber {
     }
   }
 
-  async buildErrorAnnotations(cucumberError: any, statusOnError: any) {
-    return this.buildStepAnnotation(cucumberError, statusOnError, 'Failed')
-  }
-
-  async buildUndefinedAnnotation(cucumberError: any, statusOnSkipped: any) {
-    return this.buildStepAnnotation(cucumberError, statusOnSkipped, 'Undefined')
-  }
-
-  async buildPendingAnnotation(cucumberError: any, statusOnPending: any) {
-    return this.buildStepAnnotation(cucumberError, statusOnPending, 'Pending')
-  }
-
   buildSummary(itemNumber: any, itemType: any, itemCounts: any): string {
-    const header = itemNumber + ' ' + itemType
+    const header = `${itemNumber} ${itemType}`
     const counts = Object.keys(itemCounts)
     .filter(key => itemCounts[key] > 0)
-    .map(key => itemCounts[key] + ' ' + key)
+    .map(key => `${itemCounts[key]} ${key}`)
     .join(', ')
     return `    ${header} (${counts})`
   }

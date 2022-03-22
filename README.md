@@ -19,7 +19,7 @@ $ npm install -g @sdlc.vitechteam/sdlc-pipeline-helper
 $ sdlcpipelinehelper COMMAND
 running command...
 $ sdlcpipelinehelper (-v|--version|version)
-@sdlc.vitechteam/sdlc-pipeline-helper/0.0.15 linux-x64 node-v14.19.0
+@sdlc.vitechteam/sdlc-pipeline-helper/0.0.15 darwin-x64 node-v16.10.0
 $ sdlcpipelinehelper --help [COMMAND]
 USAGE
   $ sdlcpipelinehelper COMMAND
@@ -108,9 +108,13 @@ OPTIONS
   --privateKey=privateKey            GitHub application primate key. Optionally use GH_APP_PRIVATE_KEY environment
                                      variable
 
+  --repoFolderName=repoFolderName    [default: source] repository folder name
+
   --repoName=repoName                (required) Git repository name
 
   --repoOwner=repoOwner              (required) Git repository owner
+
+  --sourceRootPath=sourceRootPath    [default: /workspace/source] source root path
 ```
 
 _See code: [src/commands/cucumber-publish.ts](https://github.com/vitech-team-sdlc/sdlc-pipeline-helper/blob/v0.0.15/src/commands/cucumber-publish.ts)_

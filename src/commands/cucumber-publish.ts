@@ -10,6 +10,22 @@ export default class CucumberPublish extends Command {
   static flags = {
     ...cf.commonFlags,
 
+    sourceRootPath: flags.string(
+      {
+        description: 'source root path',
+        default: '/workspace/source',
+        required: false,
+      },
+    ),
+
+    repoFolderName: flags.string(
+      {
+        description: 'repository folder name',
+        default: 'source',
+        required: false,
+      },
+    ),
+
     reportPath: flags.string(
       {
         char: 'f',
@@ -32,6 +48,8 @@ export default class CucumberPublish extends Command {
     const ghAppVars = cf.getGhAppProps(flags)
     await new Cucumber().publishAsCheck({
       ...ghAppVars,
+      repoFolderName: flags.repoFolderName,
+      sourceRootPath: flags.sourceRootPath,
       reportPath: flags.reportPath,
       commit: flags.commit,
       repoOwner: flags.repoOwner,
