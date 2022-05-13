@@ -30,6 +30,8 @@ export default class GithubCheckPublisher {
       conclusion = check.conclusion === '0' ? 'success' : 'failure'
     }
 
+    core.info(`conclusion: ${check.conclusion} vs ${conclusion}`)
+
     const createCheckRequest = {
       owner: check.repoOwner,
       repo: check.repoName,
