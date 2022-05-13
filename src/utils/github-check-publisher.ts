@@ -25,13 +25,18 @@ export interface GitHubCheck extends GitHubCheckBasic {
 
 export default class GithubCheckPublisher {
   public async publish(check: GitHubCheck) {
+    let conclusion = check.conclusion
+    if (check.conclusion === '0' || check.conclusion === '1') {
+      conclusion = check.conclusion === '0' ? 'success' : 'failure'
+    }
+
     const createCheckRequest = {
       owner: check.repoOwner,
       repo: check.repoName,
       name: check.checkName,
       head_sha: check.commit,
       status: check.checkStatus,
-      conclusion: check.conclusion,
+      conclusion: conclusion,
       details_url: check.detailsUrl,
       output: {
         title: check.title,
