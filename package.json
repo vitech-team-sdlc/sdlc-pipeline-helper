@@ -1,7 +1,7 @@
 {
   "name": "@sdlc.vitechteam/sdlc-pipeline-helper",
   "description": "SDLC Pipelines Helper",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "author": "serhiykrupka",
   "bin": {
     "sdlcpipelinehelper": "./bin/run"
