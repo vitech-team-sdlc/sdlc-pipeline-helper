@@ -26,7 +26,7 @@ export interface GitHubCheck extends GitHubCheckBasic {
 export default class GithubCheckPublisher {
   public async publish(check: GitHubCheck) {
     let conclusion = check.conclusion
-    if (Number.isInteger(check.conclusion)) {
+    if (!isNaN(Number(conclusion))) {
       conclusion = check.conclusion === '0' ? 'success' : 'failure'
     }
 
